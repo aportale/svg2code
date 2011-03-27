@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Qtorials - Bite sized Qt tutorials</title>
+        <script type="text/javascript" src="svg2code-test.js"></script>
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+                svg2code_draw(context, "test", 100, 100, 200, 200);
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="400">
+            Your browser does not support HTML5 Canvas.
+        </canvas>
+    </body>
+</html>
