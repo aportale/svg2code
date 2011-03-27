@@ -1,19 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Qtorials - Bite sized Qt tutorials</title>
+        <title>svg2code - test</title>
         <script type="text/javascript" src="svg2code-test.js"></script>
         <script type="text/javascript">
             window.onload = function()
             {
-                var canvas = document.getElementById('canvas');
-                var context = canvas.getContext('2d');
-                svg2code_draw(context, "test", 100, 100, 200, 200);
+                var canvas1 = document.getElementById('canvas1');
+                var context1 = canvas1.getContext('2d');
+                svg2code_draw(context1, 'cat', 100, 100, 200, 200);
+
+                var canvas2 = document.getElementById('canvas2');
+                var context2 = canvas2.getContext('2d');
+                svg2code_draw(context2, 'dog', 100, 100, 200, 200);
             }
         </script>
     </head>
     <body>
-        <canvas id="canvas" width="400" height="400">
+        <canvas id="canvas1" width="800" height="300">
+            Your browser does not support HTML5 Canvas.
+        </canvas>
+        <canvas id="canvas2" width="800" height="300">
             Your browser does not support HTML5 Canvas.
         </canvas>
     </body>

@@ -3,7 +3,7 @@
 
 #include <QtCore/QObject>
 #include <QtGui/QPaintDevice>
-#include <QtGui/QPaintEngineState>
+#include <QtGui/QPaintEngine>
 
 struct Element {
     QString id;
@@ -15,8 +15,10 @@ class CodePaintDevice : public QObject, public QPaintDevice
 {
     Q_OBJECT
 
+protected:
+    explicit CodePaintDevice(QObject *parent, QPaintEngine::PaintEngineFeatures features);
+
 public:
-    explicit CodePaintDevice(QObject *parent = 0);
     virtual ~CodePaintDevice();
 
     void addElement(const Element &id);
@@ -36,7 +38,8 @@ private slots:
 
 protected:
     QList<Element> m_elements;
-    QPaintEngineState m_currentState;
+    QPen m_currentPen;
+    QBrush m_currentBrush;
 
 private:
     mutable class MyPaintEngine *m_paintEngine;
@@ -56,6 +59,8 @@ protected:
 class CodePaintDeviceHTML5Canvas : public CodePaintDevice
 {
 public:
+    CodePaintDeviceHTML5Canvas(QObject *parent = 0);
+
     QString code() const;
 
 protected:
