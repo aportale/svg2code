@@ -128,7 +128,7 @@ QString CodePaintDeviceHTML5Canvas::code() const
     foreach (const Element &element, m_elements) {
         const QString functionName = QString::fromLatin1("svg2code_draw_%1").arg(count, 3, 10, QLatin1Char('0'));
         drawFunctions.append("\n"
-                             "function " + functionName + "(context, x, y, width, height) // '" + element.id + "'\n"
+                             "function " + functionName + "(c, x, y, width, height) // '" + element.id + "'\n"
                              "{\n"
                              + element.code +
                              "}\n");
@@ -167,15 +167,15 @@ void CodePaintDeviceHTML5Canvas::onUpdateState(const QPaintEngineState &state)
 void CodePaintDeviceHTML5Canvas::onDrawPath(const QPainterPath &path)
 {
     QString &code = m_elements.last().code;
-    code.append("    context.beginPath();\n");
+    code.append("    c.beginPath();\n");
     for (int i = 0; i < path.elementCount(); i++) {
         const QPainterPath::Element &element = path.elementAt(i);
         switch (element.type) {
             case QPainterPath::LineToElement:
-                code.append("    context.lineTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1) + ");\n");
+                code.append("    c.lineTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1) + ");\n");
             break;
             case QPainterPath::CurveToElement: {
-                code.append("    context.bezierCurveTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1)  + ", ");
+                code.append("    c.bezierCurveTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1)  + ", ");
                 const QPainterPath::Element &dataElement1 = path.elementAt(++i);
                 code.append(QString::number(dataElement1.x, 'f', 1) + ", " + QString::number(dataElement1.y, 'f', 1)  + ", ");
                 const QPainterPath::Element &dataElement2 = path.elementAt(++i);
@@ -184,25 +184,25 @@ void CodePaintDeviceHTML5Canvas::onDrawPath(const QPainterPath &path)
             break;
             default:
             case QPainterPath::MoveToElement:
-                code.append("    context.moveTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1) + ");\n");
+                code.append("    c.moveTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1) + ");\n");
             break;
         }
     }
-    code.append("    context.closePath();\n");
+    code.append("    c.closePath();\n");
     if (m_currentBrush.style() != Qt::NoBrush) {
         const QColor color = m_currentBrush.color();
-        code.append("    context.fillStyle = 'rgba(" + QString::number(color.red()) + ", "
+        code.append("    c.fillStyle = 'rgba(" + QString::number(color.red()) + ", "
                                                      + QString::number(color.green()) + ", "
                                                      + QString::number(color.blue()) + ", "
                                                      + QString::number(color.alphaF(), 'f', 1) + ")';\n");
-        code.append("    context.fill();\n");
+        code.append("    c.fill();\n");
     } else if (m_currentPen.style() != Qt::NoPen) {
         const QColor color = m_currentPen.color();
-        code.append("    context.strokeStyle = 'rgba(" + QString::number(color.red()) + ", "
+        code.append("    c.strokeStyle = 'rgba(" + QString::number(color.red()) + ", "
                                                        + QString::number(color.green()) + ", "
                                                        + QString::number(color.blue()) + ", "
                                                        + QString::number(color.alphaF(), 'f', 1) + ")';\n");
-        code.append("    context.stroke();\n");
+        code.append("    c.stroke();\n");
     }
 }
 
