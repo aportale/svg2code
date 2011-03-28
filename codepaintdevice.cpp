@@ -137,7 +137,7 @@ QString CodePaintDeviceHTML5Canvas::code() const
                              "}\n");
         if (count > 0)
             dictionary.append(",\n    ");
-        dictionary.append("'" + element.id + "': { bounds: ["
+        dictionary.append("'" + element.id + "': { id: '" + element.id + "', bounds: ["
                           + QString::number(element.rect.x(), 'f', 1)
                           + ", " + QString::number(element.rect.y(), 'f', 1)
                           + ", " + QString::number(element.rect.width(), 'f', 1)

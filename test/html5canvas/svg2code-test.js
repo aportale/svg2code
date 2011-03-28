@@ -359,8 +359,8 @@ function svg2code_draw_001(c) // 'dog'
 }
 
 var elements = {
-    'cat': { bounds: [374.4, 184.0, 93.2, 77.3], drawfunction: svg2code_draw_000 },
-    'dog': { bounds: [272.2, 183.4, 91.2, 76.1], drawfunction: svg2code_draw_001 }
+    'cat': { id: 'cat', bounds: [374.4, 184.0, 93.2, 77.3], drawfunction: svg2code_draw_000 },
+    'dog': { id: 'dog', bounds: [272.2, 183.4, 91.2, 76.1], drawfunction: svg2code_draw_001 }
 }
 
 function svg2code_draw(context, id, x, y, width, height)
