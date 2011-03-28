@@ -59,6 +59,10 @@ CodePaintDevice::CodePaintDevice(QObject *parent, QPaintEngine::PaintEngineFeatu
     : QObject(parent)
     , QPaintDevice()
     , m_paintEngine(new MyPaintEngine(this, features))
+    , m_pen(Qt::NoPen)
+    , m_brush(Qt::NoBrush)
+    , m_activePen(Qt::NoPen)
+    , m_activeBrush(Qt::NoBrush)
 {
     connect(m_paintEngine, SIGNAL(stateUpdated(QPaintEngineState)), SLOT(updateState(QPaintEngineState)));
     connect(m_paintEngine, SIGNAL(pathDrawn(QPainterPath)), SLOT(drawPath(QPainterPath)));
@@ -70,6 +74,10 @@ CodePaintDevice::~CodePaintDevice()
 
 void CodePaintDevice::addElement(const Element &element)
 {
+    m_pen.setStyle(Qt::NoPen);
+    m_brush.setStyle(Qt::NoBrush);
+    m_activePen.setStyle(Qt::NoPen);
+    m_activeBrush.setStyle(Qt::NoBrush);
     m_elements.append(element);
 }
 
@@ -87,9 +95,8 @@ int CodePaintDevice::metric(PaintDeviceMetric m) const
 
 void CodePaintDevice::updateState(const QPaintEngineState &state)
 {
-    m_currentPen = state.pen();
-    m_currentBrush = state.brush();
-    onUpdateState(state);
+    m_pen = state.pen();
+    m_brush = state.brush();
 }
 
 void CodePaintDevice::drawPath(const QPainterPath &path)
@@ -103,10 +110,6 @@ QString CodePaintDeviceQt::code() const
 }
 
 void CodePaintDeviceQt::onNewElement(const Element &element)
-{
-}
-
-void CodePaintDeviceQt::onUpdateState(const QPaintEngineState &state)
 {
 }
 
@@ -167,12 +170,19 @@ void CodePaintDeviceHTML5Canvas::onNewElement(const Element &element)
     Q_UNUSED(element)
 }
 
-void CodePaintDeviceHTML5Canvas::onUpdateState(const QPaintEngineState &state)
+static QString toCssStyle(const QColor &color)
 {
+    QString rgb = QString::number(color.red()) + ", "
+            + QString::number(color.green()) + ", "
+            + QString::number(color.blue());
+    return color.alpha() == 255 ? "rgb(" + rgb + ")"
+                                : "rgba(" + rgb + ", " + QString::number(color.alphaF(), 'f', 1) + ")";
 }
 
 void CodePaintDeviceHTML5Canvas::onDrawPath(const QPainterPath &path)
 {
+    if (m_pen.style() == Qt::NoPen && m_brush.style() == Qt::NoBrush)
+        return;
     QString &code = m_elements.last().code;
     code.append("    c.beginPath();\n");
     for (int i = 0; i < path.elementCount(); i++) {
@@ -196,20 +206,21 @@ void CodePaintDeviceHTML5Canvas::onDrawPath(const QPainterPath &path)
         }
     }
     code.append("    c.closePath();\n");
-    if (m_currentBrush.style() != Qt::NoBrush) {
-        const QColor color = m_currentBrush.color();
-        code.append("    c.fillStyle = 'rgba(" + QString::number(color.red()) + ", "
-                                                     + QString::number(color.green()) + ", "
-                                                     + QString::number(color.blue()) + ", "
-                                                     + QString::number(color.alphaF(), 'f', 1) + ")';\n");
-        code.append("    c.fill();\n");
-    } else if (m_currentPen.style() != Qt::NoPen) {
-        const QColor color = m_currentPen.color();
-        code.append("    c.strokeStyle = 'rgba(" + QString::number(color.red()) + ", "
-                                                       + QString::number(color.green()) + ", "
-                                                       + QString::number(color.blue()) + ", "
-                                                       + QString::number(color.alphaF(), 'f', 1) + ")';\n");
+    if (m_pen.style() != Qt::NoPen) {
+        if (m_pen != m_activePen) {
+            m_activePen = m_pen;
+            m_elements.last().code.append(
+                        "    c.strokeStyle = '" + toCssStyle(m_activePen.color()) + "';\n");
+        }
         code.append("    c.stroke();\n");
+    }
+    if (m_brush.style() != Qt::NoBrush) {
+        if (m_brush != m_activeBrush) {
+            m_activeBrush = m_brush;
+            m_elements.last().code.append(
+                        "    c.fillStyle = '" + toCssStyle(m_activeBrush.color()) + "';\n");
+        }
+        code.append("    c.fill();\n");
     }
 }
 

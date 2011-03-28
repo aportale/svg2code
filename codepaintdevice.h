@@ -29,7 +29,6 @@ protected:
     int metric(PaintDeviceMetric m) const;
 
     virtual void onNewElement(const Element &id) = 0;
-    virtual void onUpdateState(const QPaintEngineState &state) = 0;
     virtual void onDrawPath(const QPainterPath &path) = 0;
 
 private slots:
@@ -38,8 +37,10 @@ private slots:
 
 protected:
     QList<Element> m_elements;
-    QPen m_currentPen;
-    QBrush m_currentBrush;
+    QPen m_pen;
+    QPen m_activePen;
+    QBrush m_brush;
+    QBrush m_activeBrush;
 
 private:
     mutable class MyPaintEngine *m_paintEngine;
@@ -52,7 +53,6 @@ public:
 
 protected:
     void onNewElement(const Element &id);
-    void onUpdateState(const QPaintEngineState &state);
     void onDrawPath(const QPainterPath &path);
 };
 
@@ -65,7 +65,6 @@ public:
 
 protected:
     void onNewElement(const Element &id);
-    void onUpdateState(const QPaintEngineState &state);
     void onDrawPath(const QPainterPath &path);
 };
 

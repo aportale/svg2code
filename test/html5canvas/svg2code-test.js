@@ -3,13 +3,6 @@
 function svg2code_draw_000(c) // 'cat'
 {
     c.beginPath();
-    c.moveTo(374.4, 184.0);
-    c.lineTo(467.5, 184.0);
-    c.lineTo(467.5, 261.4);
-    c.lineTo(374.4, 261.4);
-    c.lineTo(374.4, 184.0);
-    c.closePath();
-    c.beginPath();
     c.moveTo(391.4, 212.8);
     c.bezierCurveTo(395.2, 210.2, 396.3, 208.8, 397.4, 207.1);
     c.bezierCurveTo(396.6, 205.6, 397.5, 202.8, 399.9, 202.0);
@@ -50,7 +43,7 @@ function svg2code_draw_000(c) // 'cat'
     c.lineTo(393.3, 214.4);
     c.bezierCurveTo(393.3, 214.4, 392.7, 213.3, 391.4, 212.8);
     c.closePath();
-    c.fillStyle = 'rgba(34, 34, 34, 1.0)';
+    c.fillStyle = 'rgb(34, 34, 34)';
     c.fill();
     c.beginPath();
     c.moveTo(417.8, 196.8);
@@ -103,7 +96,7 @@ function svg2code_draw_000(c) // 'cat'
     c.bezierCurveTo(404.0, 201.1, 404.6, 200.8, 405.8, 200.8);
     c.bezierCurveTo(404.6, 198.5, 403.7, 196.9, 401.2, 195.4);
     c.closePath();
-    c.fillStyle = 'rgba(222, 170, 135, 1.0)';
+    c.fillStyle = 'rgb(222, 170, 135)';
     c.fill();
     c.beginPath();
     c.moveTo(414.9, 204.7);
@@ -128,7 +121,7 @@ function svg2code_draw_000(c) // 'cat'
     c.bezierCurveTo(398.6, 255.5, 400.0, 255.0, 400.9, 254.9);
     c.lineTo(401.1, 243.5);
     c.closePath();
-    c.fillStyle = 'rgba(200, 113, 55, 1.0)';
+    c.fillStyle = 'rgb(200, 113, 55)';
     c.fill();
     c.beginPath();
     c.moveTo(398.5, 210.3);
@@ -142,7 +135,7 @@ function svg2code_draw_000(c) // 'cat'
     c.bezierCurveTo(399.8, 215.4, 399.5, 214.8, 399.5, 214.6);
     c.bezierCurveTo(398.9, 213.4, 398.6, 212.0, 398.5, 210.3);
     c.closePath();
-    c.fillStyle = 'rgba(34, 34, 34, 1.0)';
+    c.fillStyle = 'rgb(34, 34, 34)';
     c.fill();
     c.beginPath();
     c.moveTo(403.3, 204.2);
@@ -161,7 +154,7 @@ function svg2code_draw_000(c) // 'cat'
     c.bezierCurveTo(408.3, 207.8, 407.1, 208.6, 406.2, 207.8);
     c.bezierCurveTo(405.3, 207.1, 406.0, 205.5, 407.0, 205.4);
     c.closePath();
-    c.fillStyle = 'rgba(255, 255, 255, 1.0)';
+    c.fillStyle = 'rgb(255, 255, 255)';
     c.fill();
     c.beginPath();
     c.moveTo(396.4, 215.3);
@@ -195,19 +188,12 @@ function svg2code_draw_000(c) // 'cat'
     c.bezierCurveTo(406.9, 213.3, 406.9, 213.0, 407.3, 212.7);
     c.lineTo(407.3, 212.7);
     c.closePath();
-    c.fillStyle = 'rgba(34, 34, 34, 1.0)';
+    c.fillStyle = 'rgb(34, 34, 34)';
     c.fill();
 }
 
 function svg2code_draw_001(c) // 'dog'
 {
-    c.beginPath();
-    c.moveTo(272.2, 183.4);
-    c.lineTo(363.4, 183.4);
-    c.lineTo(363.4, 259.5);
-    c.lineTo(272.2, 259.5);
-    c.lineTo(272.2, 183.4);
-    c.closePath();
     c.beginPath();
     c.moveTo(286.7, 209.7);
     c.bezierCurveTo(287.1, 209.1, 296.4, 209.0, 296.4, 209.0);
@@ -250,7 +236,7 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(291.2, 222.3, 289.1, 220.5, 288.3, 216.1);
     c.bezierCurveTo(285.9, 215.8, 286.4, 210.2, 286.7, 209.7);
     c.closePath();
-    c.fillStyle = 'rgba(34, 34, 34, 1.0)';
+    c.fillStyle = 'rgb(34, 34, 34)';
     c.fill();
     c.beginPath();
     c.moveTo(291.5, 210.1);
@@ -267,7 +253,7 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(291.0, 221.3, 289.5, 219.6, 288.8, 216.1);
     c.bezierCurveTo(290.8, 215.6, 291.2, 212.4, 291.5, 210.1);
     c.closePath();
-    c.fillStyle = 'rgba(212, 170, 0, 1.0)';
+    c.fillStyle = 'rgb(212, 170, 0)';
     c.fill();
     c.beginPath();
     c.moveTo(316.2, 238.4);
@@ -276,7 +262,6 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(321.5, 250.7, 317.2, 248.3, 315.0, 241.8);
     c.lineTo(316.2, 238.4);
     c.closePath();
-    c.fillStyle = 'rgba(212, 170, 0, 1.0)';
     c.fill();
     c.beginPath();
     c.moveTo(295.3, 200.7);
@@ -298,7 +283,7 @@ function svg2code_draw_001(c) // 'dog'
     c.lineTo(298.0, 199.6);
     c.bezierCurveTo(296.8, 200.4, 295.8, 200.8, 295.3, 200.7);
     c.closePath();
-    c.fillStyle = 'rgba(85, 68, 0, 1.0)';
+    c.fillStyle = 'rgb(85, 68, 0)';
     c.fill();
     c.beginPath();
     c.moveTo(319.4, 218.8);
@@ -329,7 +314,6 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(309.3, 245.2, 310.3, 230.1, 308.8, 225.9);
     c.bezierCurveTo(308.8, 225.9, 315.9, 223.1, 319.4, 218.8);
     c.closePath();
-    c.fillStyle = 'rgba(85, 68, 0, 1.0)';
     c.fill();
     c.beginPath();
     c.moveTo(343.1, 253.4);
@@ -340,7 +324,6 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(356.2, 255.1, 343.1, 256.1, 343.1, 256.1);
     c.lineTo(343.1, 253.4);
     c.closePath();
-    c.fillStyle = 'rgba(85, 68, 0, 1.0)';
     c.fill();
     c.beginPath();
     c.moveTo(302.1, 203.9);
@@ -352,7 +335,7 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(303.8, 208.8, 302.6, 209.6, 301.8, 208.8);
     c.bezierCurveTo(300.9, 208.1, 301.5, 206.5, 302.6, 206.4);
     c.closePath();
-    c.fillStyle = 'rgba(255, 255, 255, 1.0)';
+    c.fillStyle = 'rgb(255, 255, 255)';
     c.fill();
     c.beginPath();
     c.moveTo(299.7, 204.4);
@@ -363,7 +346,6 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(294.0, 209.0, 296.7, 201.3, 299.7, 204.4);
     c.lineTo(299.7, 204.4);
     c.closePath();
-    c.fillStyle = 'rgba(255, 255, 255, 1.0)';
     c.fill();
     c.beginPath();
     c.moveTo(315.3, 244.3);
@@ -372,7 +354,7 @@ function svg2code_draw_001(c) // 'dog'
     c.bezierCurveTo(311.7, 252.4, 314.1, 243.9, 314.6, 242.6);
     c.lineTo(315.3, 244.3);
     c.closePath();
-    c.fillStyle = 'rgba(43, 34, 0, 1.0)';
+    c.fillStyle = 'rgb(43, 34, 0)';
     c.fill();
 }
 
