@@ -128,7 +128,7 @@ QString CodePaintDeviceHTML5Canvas::code() const
     foreach (const Element &element, m_elements) {
         const QString functionName = QString::fromLatin1("svg2code_draw_%1").arg(count, 3, 10, QLatin1Char('0'));
         drawFunctions.append("\n"
-                             "function " + functionName + "(c, x, y, width, height) // '" + element.id + "'\n"
+                             "function " + functionName + "(c) // '" + element.id + "'\n"
                              "{\n"
                              + element.code +
                              "}\n");
@@ -148,10 +148,17 @@ QString CodePaintDeviceHTML5Canvas::code() const
     result.append("\n"
                   "function svg2code_draw(context, id, x, y, width, height)\n"
                   "{\n"
-                  "    if (elements[id] !== undefined) {\n"
-                  "        elements[id].drawfunction(context, x, y, width, height);\n"
+                  "    var element = elements[id];\n"
+                  "    if (element !== undefined) {\n"
+                  "        context.save();\n"
+                  "        context.translate(x, y);\n"
+                  "        if (width !== undefined && height !== undefined)\n"
+                  "            context.scale(width / element.bounds[2], height / element.bounds[3]);\n"
+                  "        context.translate(-element.bounds[0], -element.bounds[1]);\n"
+                  "        element.drawfunction(context);\n"
+                  "        context.restore();\n"
                   "    }\n"
-                  "}\n");
+                  "}\n\n");
     return result;
 }
 

@@ -6,21 +6,23 @@
         <script type="text/javascript">
             window.onload = function()
             {
-                var canvas1 = document.getElementById('canvas1');
-                var context1 = canvas1.getContext('2d');
-                svg2code_draw(context1, 'cat', 100, 100, 200, 200);
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
 
-                var canvas2 = document.getElementById('canvas2');
-                var context2 = canvas2.getContext('2d');
-                svg2code_draw(context2, 'dog', 100, 100, 200, 200);
+                var cat = elements['cat'];
+                svg2code_draw(context, 'cat', 55, 305, cat.bounds[2] * 0.3, cat.bounds[3] * 0.3 );
+                svg2code_draw(context, 'cat', 363, 0, cat.bounds[2] * 4.35, cat.bounds[3] * 4.35 );
+
+                var dog = elements['dog'];
+                svg2code_draw(context, 'dog', 210, 100, dog.bounds[2] * 3, dog.bounds[3] * 3 );
+                svg2code_draw(context, 'dog', 120, 176, dog.bounds[2] * 2, dog.bounds[3] * 2 );
+                svg2code_draw(context, 'dog', 88, 252);
+                svg2code_draw(context, 'dog', 70, 290, dog.bounds[2] * 0.5, dog.bounds[3] * 0.5 );
             }
         </script>
     </head>
     <body>
-        <canvas id="canvas1" width="800" height="300">
-            Your browser does not support HTML5 Canvas.
-        </canvas>
-        <canvas id="canvas2" width="800" height="300">
+        <canvas id="canvas" width="800" height="360">
             Your browser does not support HTML5 Canvas.
         </canvas>
     </body>
