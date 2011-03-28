@@ -10,14 +10,14 @@
                 var context = canvas.getContext('2d');
 
                 var cat = elements['cat'];
-                svg2code_draw(context, cat.id, 55, 305, cat.bounds[2] * 0.3, cat.bounds[3] * 0.3 );
-                svg2code_draw(context, cat.id, 363, 0, cat.bounds[2] * 4.35, cat.bounds[3] * 4.35 );
+                svg2code_draw(context, cat.id, 55, 305, cat.bounds.width * 0.3, cat.bounds.height * 0.3 );
+                svg2code_draw(context, cat.id, 363, 0, cat.bounds.width * 4.35, cat.bounds.height * 4.35 );
 
                 var dog = elements['dog'];
-                svg2code_draw(context, dog.id, 210, 100, dog.bounds[2] * 3, dog.bounds[3] * 3 );
-                svg2code_draw(context, dog.id, 120, 176, dog.bounds[2] * 2, dog.bounds[3] * 2 );
+                svg2code_draw(context, dog.id, 210, 100, dog.bounds.width * 3, dog.bounds.height * 3 );
+                svg2code_draw(context, dog.id, 120, 176, dog.bounds.width * 2, dog.bounds.height * 2 );
                 svg2code_draw(context, dog.id, 88, 252);
-                svg2code_draw(context, dog.id, 70, 290, dog.bounds[2] * 0.5, dog.bounds[3] * 0.5 );
+                svg2code_draw(context, dog.id, 70, 290, dog.bounds.width * 0.5, dog.bounds.height * 0.5 );
             }
         </script>
     </head>

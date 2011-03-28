@@ -359,8 +359,8 @@ function svg2code_draw_001(c) // 'dog'
 }
 
 var elements = {
-    'cat': { id: 'cat', bounds: [374.4, 184.0, 93.2, 77.3], drawfunction: svg2code_draw_000 },
-    'dog': { id: 'dog', bounds: [272.2, 183.4, 91.2, 76.1], drawfunction: svg2code_draw_001 }
+    'cat': { id: 'cat', bounds: { x: 374.4, y: 184.0, width: 93.2, height: 77.3 }, drawfunction: svg2code_draw_000 },
+    'dog': { id: 'dog', bounds: { x: 272.2, y: 183.4, width: 91.2, height: 76.1 }, drawfunction: svg2code_draw_001 }
 }
 
 function svg2code_draw(context, id, x, y, width, height)
@@ -370,8 +370,8 @@ function svg2code_draw(context, id, x, y, width, height)
         context.save();
         context.translate(x, y);
         if (width !== undefined && height !== undefined)
-            context.scale(width / element.bounds[2], height / element.bounds[3]);
-        context.translate(-element.bounds[0], -element.bounds[1]);
+            context.scale(width / element.bounds.width, height / element.bounds.height);
+        context.translate(-element.bounds.x, -element.bounds.y);
         element.drawfunction(context);
         context.restore();
     }

@@ -137,12 +137,12 @@ QString CodePaintDeviceHTML5Canvas::code() const
                              "}\n");
         if (count > 0)
             dictionary.append(",\n    ");
-        dictionary.append("'" + element.id + "': { id: '" + element.id + "', bounds: ["
-                          + QString::number(element.rect.x(), 'f', 1)
-                          + ", " + QString::number(element.rect.y(), 'f', 1)
-                          + ", " + QString::number(element.rect.width(), 'f', 1)
-                          + ", " + QString::number(element.rect.height(), 'f', 1)
-                          + "], drawfunction: " + functionName + " }");
+        dictionary.append("'" + element.id + "': { id: '" + element.id + "', bounds: {"
+                          + " x: " + QString::number(element.rect.x(), 'f', 1)
+                          + ", y: " + QString::number(element.rect.y(), 'f', 1)
+                          + ", width: " + QString::number(element.rect.width(), 'f', 1)
+                          + ", height: " + QString::number(element.rect.height(), 'f', 1)
+                          + " }, drawfunction: " + functionName + " }");
         count++;
     }
     dictionary.append("\n}\n");
@@ -156,8 +156,8 @@ QString CodePaintDeviceHTML5Canvas::code() const
                   "        context.save();\n"
                   "        context.translate(x, y);\n"
                   "        if (width !== undefined && height !== undefined)\n"
-                  "            context.scale(width / element.bounds[2], height / element.bounds[3]);\n"
-                  "        context.translate(-element.bounds[0], -element.bounds[1]);\n"
+                  "            context.scale(width / element.bounds.width, height / element.bounds.height);\n"
+                  "        context.translate(-element.bounds.x, -element.bounds.y);\n"
                   "        element.drawfunction(context);\n"
                   "        context.restore();\n"
                   "    }\n"
