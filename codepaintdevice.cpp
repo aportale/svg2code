@@ -50,9 +50,9 @@ void MyPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF 
 {
 }
 
-MyPaintEngine::Type MyPaintEngine::type() const
+QPaintEngine::Type MyPaintEngine::type() const
 {
-    QInternal::CustomRaster;
+    return QPaintEngine::User;
 }
 
 CodePaintDevice::CodePaintDevice(QObject *parent, QPaintEngine::PaintEngineFeatures features)
@@ -99,6 +99,7 @@ void CodePaintDevice::drawPath(const QPainterPath &path)
 
 QString CodePaintDeviceQt::code() const
 {
+    return QString();
 }
 
 void CodePaintDeviceQt::onNewElement(const Element &element)
