@@ -1,25 +1,41 @@
 #include <QtGui>
+#include <QtSvg>
 #include "codepaintdevice.h"
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QPainterPath pp;
-    pp.moveTo(10, 10);
-    pp.lineTo(40, 60);
-    pp.cubicTo(30, 30, 70, 90, 90, 70);
+    QStringList args = QApplication::arguments();
+    const QString exeName = QFileInfo(args.takeFirst()).fileName();
+
+    if (args.count() < 3) {
+         std::cerr << qPrintable(exeName) << " svgfile elementid_1 elementid_2 ... elementid_n outfilename" << std::endl;
+         return 1;
+    }
+
+    const QString svgName = args.takeFirst();
+    QSvgRenderer svgRenderer(svgName);
+    if (!svgRenderer.isValid()) {
+        std::cerr << "Unable to load SVG file " << qPrintable(svgName) << std::endl;
+        return 2;
+    }
+
+    const QFileInfo outFileInfo(args.takeLast());
 
     CodePaintDeviceHTML5Canvas cpdHTML5Canvas;
-    Element cat = { "cat", QRectF(10, 20, 130, 140) };
-    cpdHTML5Canvas.addElement(cat);
     QPainter p(&cpdHTML5Canvas);
-    p.fillPath(pp, Qt::red);
 
-    Element dog = { "dog", QRectF(30, 40, 150, 160) };
-    cpdHTML5Canvas.addElement(dog);
-    p.setPen(Qt::red);
-    p.drawPath(pp);
+    foreach (const QString& elementId, args) {
+        if (!svgRenderer.elementExists(elementId)) {
+            std::cerr << "SVG element " << qPrintable(elementId) << " not found." << std::endl;
+            return 3;
+        }
+        const Element element = { elementId, svgRenderer.boundsOnElement(elementId), QString() };
+        cpdHTML5Canvas.addElement(element);
+        svgRenderer.render(&p, element.id, element.rect);
+    }
 
     qDebug() << cpdHTML5Canvas.code();
 
