@@ -2,22 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>svg2code - test</title>
-        <script type="text/javascript" src="svg2code-test.js"></script>
+        <script type="text/javascript" src="test.js"></script>
         <script type="text/javascript">
             window.onload = function()
             {
                 var canvas = document.getElementById('canvas');
+
+                var completeWidth = 0;
+                var maxHeight = 0;
+                for (var i in test_elements) {
+                    var element = test_elements[i];
+                    completeWidth += element.bounds.width;
+                    maxHeight = Math.max(maxHeight, element.bounds.height);
+                }
+
+                canvas.width = completeWidth;
+                canvas.height = maxHeight;
                 var context = canvas.getContext('2d');
 
-                var cat = elements['cat'];
-                svg2code_draw(context, cat.id, 55, 305, cat.bounds.width * 0.3, cat.bounds.height * 0.3 );
-                svg2code_draw(context, cat.id, 363, 0, cat.bounds.width * 4.35, cat.bounds.height * 4.35 );
-
-                var dog = elements['dog'];
-                svg2code_draw(context, dog.id, 210, 100, dog.bounds.width * 3, dog.bounds.height * 3 );
-                svg2code_draw(context, dog.id, 120, 176, dog.bounds.width * 2, dog.bounds.height * 2 );
-                svg2code_draw(context, dog.id, 88, 252);
-                svg2code_draw(context, dog.id, 70, 290, dog.bounds.width * 0.5, dog.bounds.height * 0.5 );
+                var currentX = 0;
+                for (i in test_elements) {
+                    var element = test_elements[i];
+                    test_draw(context, element.id, currentX, maxHeight - element.bounds.height);
+                    currentX += element.bounds.width;
+                }
             }
         </script>
     </head>

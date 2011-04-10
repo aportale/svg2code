@@ -11,4 +11,4 @@ HEADERS += \
 
 OTHER_FILES += \
     test/html5canvas/index.html \
-    test/html5canvas/svg2code-test.js
+    test/html5canvas/test.js
