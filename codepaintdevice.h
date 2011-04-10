@@ -15,10 +15,8 @@ class CodePaintDevice : public QObject, public QPaintDevice
 {
     Q_OBJECT
 
-protected:
-    explicit CodePaintDevice(QObject *parent, QPaintEngine::PaintEngineFeatures features);
-
 public:
+    explicit CodePaintDevice(const QString &prefix, QObject *parent, QPaintEngine::PaintEngineFeatures features);
     virtual ~CodePaintDevice();
 
     void addElement(const Element &id);
@@ -36,6 +34,7 @@ private slots:
     void drawPath(const QPainterPath &path);
 
 protected:
+    QString m_prefix;
     QList<Element> m_elements;
     QPen m_pen;
     QPen m_activePen;
@@ -59,7 +58,7 @@ protected:
 class CodePaintDeviceHTML5Canvas : public CodePaintDevice
 {
 public:
-    CodePaintDeviceHTML5Canvas(QObject *parent = 0);
+    CodePaintDeviceHTML5Canvas(const QString &prefix, QObject *parent = 0);
 
     QString code() const;
 

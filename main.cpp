@@ -18,18 +18,18 @@ int main(int argc, char *argv[])
     const QString svgName = args.takeFirst();
     QSvgRenderer svgRenderer(svgName);
     if (!svgRenderer.isValid()) {
-        std::cerr << "Unable to load SVG file " << qPrintable(svgName) << std::endl;
+        std::cerr << "Unable to load SVG file '" << qPrintable(svgName) << "'" << std::endl;
         return 2;
     }
 
     const QFileInfo outFileInfo(args.takeLast());
 
-    CodePaintDeviceHTML5Canvas cpdHTML5Canvas;
+    CodePaintDeviceHTML5Canvas cpdHTML5Canvas(outFileInfo.baseName());
     QPainter p(&cpdHTML5Canvas);
 
     foreach (const QString& elementId, args) {
         if (!svgRenderer.elementExists(elementId)) {
-            std::cerr << "SVG element " << qPrintable(elementId) << " not found." << std::endl;
+            std::cerr << "SVG element '" << qPrintable(elementId) << "' not found." << std::endl;
             return 3;
         }
         const Element element = { elementId, svgRenderer.boundsOnElement(elementId), QString() };
@@ -37,7 +37,13 @@ int main(int argc, char *argv[])
         svgRenderer.render(&p, element.id, element.rect);
     }
 
-    qDebug() << cpdHTML5Canvas.code();
+    QFile outFile(outFileInfo.absoluteFilePath());
+    if (!outFile.open(QIODevice::WriteOnly)) {
+        std::cerr << "Cannot write to '" << qPrintable(outFileInfo.fileName()) << "'." << std::endl;
+        return 4;
+    }
+
+    outFile.write(cpdHTML5Canvas.code().toUtf8());
 
     return 0;
 }
