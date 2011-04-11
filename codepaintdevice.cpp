@@ -147,7 +147,7 @@ QString CodePaintDeviceHTML5Canvas::code() const
                           + " }, drawfunction: " + functionName + " }");
         count++;
     }
-    dictionary.append("\n}\n");
+    dictionary.append("\n};\n");
     result.append(drawFunctions);
     result.append(dictionary);
     result.append("\n"
