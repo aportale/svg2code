@@ -98,6 +98,7 @@ void CodePaintDevice::updateState(const QPaintEngineState &state)
 {
     m_pen = state.pen();
     m_brush = state.brush();
+    m_activeTransform = state.transform();
 }
 
 void CodePaintDevice::drawPath(const QPainterPath &path)
@@ -119,7 +120,7 @@ void CodePaintDeviceQt::onDrawPath(const QPainterPath &path)
 }
 
 CodePaintDeviceHTML5Canvas::CodePaintDeviceHTML5Canvas(const QString &prefix, QObject *parent)
-    : CodePaintDevice(prefix, parent, QPaintEngine::PainterPaths)
+    : CodePaintDevice(prefix, parent, QPaintEngine::PainterPaths | QPaintEngine::PrimitiveTransform)
 {
 }
 
@@ -185,19 +186,20 @@ void CodePaintDeviceHTML5Canvas::onDrawPath(const QPainterPath &path)
 {
     if (m_pen.style() == Qt::NoPen && m_brush.style() == Qt::NoBrush)
         return;
+    QPainterPath transformedPath = m_activeTransform.map(path);
     QString &code = m_elements.last().code;
     code.append("    c.beginPath();\n");
-    for (int i = 0; i < path.elementCount(); i++) {
-        const QPainterPath::Element &element = path.elementAt(i);
+    for (int i = 0; i < transformedPath.elementCount(); i++) {
+        const QPainterPath::Element &element = transformedPath.elementAt(i);
         switch (element.type) {
             case QPainterPath::LineToElement:
                 code.append("    c.lineTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1) + ");\n");
             break;
             case QPainterPath::CurveToElement: {
                 code.append("    c.bezierCurveTo(" + QString::number(element.x, 'f', 1) + ", " + QString::number(element.y, 'f', 1)  + ", ");
-                const QPainterPath::Element &dataElement1 = path.elementAt(++i);
+                const QPainterPath::Element &dataElement1 = transformedPath.elementAt(++i);
                 code.append(QString::number(dataElement1.x, 'f', 1) + ", " + QString::number(dataElement1.y, 'f', 1)  + ", ");
-                const QPainterPath::Element &dataElement2 = path.elementAt(++i);
+                const QPainterPath::Element &dataElement2 = transformedPath.elementAt(++i);
                 code.append(QString::number(dataElement2.x, 'f', 1) + ", " + QString::number(dataElement2.y, 'f', 1)  + ");\n");
             }
             break;

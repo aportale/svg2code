@@ -40,6 +40,7 @@ protected:
     QPen m_activePen;
     QBrush m_brush;
     QBrush m_activeBrush;
+    QTransform m_activeTransform;
 
 private:
     mutable class MyPaintEngine *m_paintEngine;
