@@ -35,12 +35,14 @@ private slots:
 
 protected:
     QString m_prefix;
-    QList<Element> m_elements;
     QPen m_pen;
-    QPen m_activePen;
     QBrush m_brush;
+    QPen m_activePen;
     QBrush m_activeBrush;
+    qreal m_opacity;
+    qreal m_acticeOpacity;
     QTransform m_activeTransform;
+    QList<Element> m_elements;
 
 private:
     mutable class MyPaintEngine *m_paintEngine;

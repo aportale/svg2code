@@ -59,11 +59,11 @@ CodePaintDevice::CodePaintDevice(const QString &prefix, QObject *parent, QPaintE
     : QObject(parent)
     , QPaintDevice()
     , m_prefix(prefix + QLatin1Char('_'))
-    , m_paintEngine(new MyPaintEngine(this, features))
     , m_pen(Qt::NoPen)
     , m_brush(Qt::NoBrush)
     , m_activePen(Qt::NoPen)
     , m_activeBrush(Qt::NoBrush)
+    , m_paintEngine(new MyPaintEngine(this, features))
 {
     connect(m_paintEngine, SIGNAL(stateUpdated(QPaintEngineState)), SLOT(updateState(QPaintEngineState)));
     connect(m_paintEngine, SIGNAL(pathDrawn(QPainterPath)), SLOT(drawPath(QPainterPath)));
