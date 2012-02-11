@@ -10,8 +10,8 @@
 
                 var completeWidth = 0;
                 var maxHeight = 0;
-                for (var i in test_elements) {
-                    var element = test_elements[i];
+                for (var i in test.elements) {
+                    var element = test.elements[i];
                     completeWidth += element.bounds.width;
                     maxHeight = Math.max(maxHeight, element.bounds.height);
                 }
@@ -22,9 +22,9 @@
                 var context = canvas.getContext('2d');
 
                 var currentX = 0;
-                for (i in test_elements) {
-                    var element = test_elements[i];
-                    test_draw(context, element.id,
+                for (i in test.elements) {
+                    var element = test.elements[i];
+                    test.draw(context, element.id,
                             currentX, (maxHeight - element.bounds.height) * scaleFactor,
                             element.bounds.width * scaleFactor, element.bounds.height * scaleFactor);
                     currentX += element.bounds.width * scaleFactor;

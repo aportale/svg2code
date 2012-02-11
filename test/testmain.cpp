@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QSvgRenderer svgRenderer(QString::fromLatin1(":/somesvg.svg"));
-    CodePaintDeviceHTML5Canvas cpdHTML5Canvas;
+    CodePaintDeviceHTML5Canvas cpdHTML5Canvas("animals");
 
     const Element cat = { "cat", svgRenderer.boundsOnElement("cat"), QString() };
     cpdHTML5Canvas.addElement(cat);
