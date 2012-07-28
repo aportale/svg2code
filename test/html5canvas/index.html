@@ -3,38 +3,13 @@
     <head>
         <title>svg2code - test</title>
         <script type="text/javascript" src="test.js"></script>
+        <script type="text/javascript" src="catalog.js"></script>
         <script type="text/javascript">
             window.onload = function()
             {
-                var canvas = document.getElementById('canvas');
-
-                var completeWidth = 0;
-                var maxHeight = 0;
-                for (var i in test.elements) {
-                    var element = test.elements[i];
-                    completeWidth += element.bounds.width;
-                    maxHeight = Math.max(maxHeight, element.bounds.height);
-                }
-                var scaleFactor = 600.0 / maxHeight;
-
-                canvas.width = completeWidth * scaleFactor;
-                canvas.height = maxHeight * scaleFactor;
-                var context = canvas.getContext('2d');
-
-                var currentX = 0;
-                for (i in test.elements) {
-                    var element = test.elements[i];
-                    test.draw(context, element.id,
-                            currentX, (maxHeight - element.bounds.height) * scaleFactor,
-                            element.bounds.width * scaleFactor, element.bounds.height * scaleFactor);
-                    currentX += element.bounds.width * scaleFactor;
-                }
+                catalog.create({'test': test});
             }
         </script>
     </head>
-    <body>
-        <canvas id="canvas" width="800" height="360">
-            Your browser does not support HTML5 Canvas.
-        </canvas>
-    </body>
+    <body></body>
 </html>
