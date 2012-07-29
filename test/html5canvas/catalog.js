@@ -16,14 +16,27 @@ var catalog = {
 				var li = document.createElement('li');
 				ul.appendChild(li);
 
+				var idDiv = document.createElement('div');
+				idDiv.innerHTML = element.id;
+
+				var canvasWidth = 200;
+				var canvasHeight = 200;
+				var widthToHeightRatio = element.bounds.width / element.bounds.height;
+				var scaleFactor = Math.min(canvasWidth / element.bounds.width, canvasHeight / element.bounds.height);
+				var renderWidth = element.bounds.width * scaleFactor;
+				var renderHeight = element.bounds.height * scaleFactor;
+
 				var canvas = document.createElement('canvas');
-				canvas.width = 200;
-				canvas.height = 200;
 				li.appendChild(canvas);
 				var context = canvas.getContext('2d');
+				canvas.width = canvasWidth;
+				canvas.height = canvasHeight;
 
-				var scaleFactor = Math.min(canvas.width, canvas.height) / Math.max(element.bounds.width, element.bounds.height);
-				collection.draw(context, j, 0, 0, element.bounds.width * scaleFactor, element.bounds.height * scaleFactor)
+				collection.draw(context, j, (canvasWidth - renderWidth) / 2, (canvasHeight - renderHeight) / 2, renderWidth, renderHeight)
+
+				var idDiv = document.createElement('div');
+				idDiv.innerHTML = element.id;
+				li.appendChild(idDiv);
 			}
 		}
 	}
