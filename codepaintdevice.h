@@ -40,7 +40,7 @@ protected:
     QPen m_activePen;
     QBrush m_activeBrush;
     qreal m_opacity;
-    qreal m_acticeOpacity;
+    qreal m_activeOpacity;
     QTransform m_activeTransform;
     QList<Element> m_elements;
 

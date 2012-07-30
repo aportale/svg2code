@@ -67,6 +67,8 @@ CodePaintDevice::CodePaintDevice(const QString &prefix, QObject *parent, QPaintE
     , m_brush(Qt::NoBrush)
     , m_activePen(Qt::NoPen)
     , m_activeBrush(Qt::NoBrush)
+    , m_opacity(1)
+    , m_activeOpacity(1)
     , m_paintEngine(new MyPaintEngine(this, features))
 {
     connect(m_paintEngine, SIGNAL(stateUpdated(QPaintEngineState)), SLOT(updateState(QPaintEngineState)));
@@ -83,6 +85,8 @@ void CodePaintDevice::addElement(const Element &element)
     m_brush.setStyle(Qt::NoBrush);
     m_activePen.setStyle(Qt::NoPen);
     m_activeBrush.setStyle(Qt::NoBrush);
+    m_opacity = -1;
+    m_activeOpacity = -1;
     m_elements.append(element);
 }
 
@@ -102,6 +106,7 @@ void CodePaintDevice::updateState(const QPaintEngineState &state)
 {
     m_pen = state.pen();
     m_brush = state.brush();
+    m_opacity = state.opacity();
     m_activeTransform = state.transform();
 }
 
@@ -124,7 +129,7 @@ void CodePaintDeviceQt::onDrawPath(const QPainterPath &path)
 }
 
 CodePaintDeviceHTML5Canvas::CodePaintDeviceHTML5Canvas(const QString &prefix, QObject *parent)
-    : CodePaintDevice(prefix, parent, QPaintEngine::PainterPaths | QPaintEngine::PrimitiveTransform)
+    : CodePaintDevice(prefix, parent, QPaintEngine::PainterPaths | QPaintEngine::PrimitiveTransform | QPaintEngine::ConstantOpacity)
 {
 }
 
@@ -203,6 +208,11 @@ void CodePaintDeviceHTML5Canvas::onDrawPath(const QPainterPath &path)
         }
     }
     code.append(ind3 + "c.closePath();\n");
+    if (!qFuzzyCompare(m_opacity, m_activeOpacity)) {
+        m_activeOpacity = m_opacity;
+        m_elements.last().code.append(
+                    ind3 + "c.globalAlpha = " + QString::number(m_activeOpacity, 'g') + ";\n");
+    }
     if (m_pen.style() != Qt::NoPen) {
         if (m_pen != m_activePen) {
             m_activePen = m_pen;
