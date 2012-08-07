@@ -152,16 +152,16 @@ QString CodePaintDeviceHTML5Canvas::code() const
     result.append("\n" + ind1 + "},\n\n");
     result.append(ind1 + "draw: function(context, id, x, y, width, height)\n"
                   + ind1 + "{\n"
+                  + ind1 + "    if (!(id in " + dictionaryName + ".elements))\n"
+                  + ind1 + "        throw new Error(\"'" + m_prefix + "' cannot draw '\" + id + \"'\");\n"
                   + ind1 + "    var element = " + dictionaryName + ".elements[id];\n"
-                  + ind1 + "    if (element !== undefined) {\n"
-                  + ind1 + "        context.save();\n"
-                  + ind1 + "        context.translate(x, y);\n"
-                  + ind1 + "        if (width !== undefined && height !== undefined)\n"
-                  + ind1 + "            context.scale(width / element.bounds.width, height / element.bounds.height);\n"
-                  + ind1 + "        context.translate(-element.bounds.x, -element.bounds.y);\n"
-                  + ind1 + "        element.drawfunction(context);\n"
-                  + ind1 + "        context.restore();\n"
-                  + ind1 + "    }\n"
+                  + ind1 + "    context.save();\n"
+                  + ind1 + "    context.translate(x, y);\n"
+                  + ind1 + "    if (width !== undefined && height !== undefined)\n"
+                  + ind1 + "        context.scale(width / element.bounds.width, height / element.bounds.height);\n"
+                  + ind1 + "    context.translate(-element.bounds.x, -element.bounds.y);\n"
+                  + ind1 + "    element.drawfunction(context);\n"
+                  + ind1 + "    context.restore();\n"
                   + ind1 + "}\n};\n");
     return result;
 }
