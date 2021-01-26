@@ -1,5 +1,6 @@
 #include "codepaintdevice.h"
 #include <QtDebug>
+#include <QPainterPath>
 
 const static QString ind1 = QLatin1String("    ");
 const static QString ind2 = ind1 + ind1;
@@ -12,12 +13,12 @@ class MyPaintEngine : public QObject, public QPaintEngine
 public:
     explicit MyPaintEngine(QObject *parent = 0, PaintEngineFeatures features = 0);
 
-    bool begin(QPaintDevice *pdev);
-    bool end();
-    void updateState(const QPaintEngineState &state);
-    void drawPath(const QPainterPath &path);
-    void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
-    Type type() const;
+    bool begin(QPaintDevice *pdev) override;
+    bool end() override;
+    void updateState(const QPaintEngineState &state) override;
+    void drawPath(const QPainterPath &path) override;
+    void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr) override;
+    Type type() const override;
 
 signals:
     void stateUpdated(const QPaintEngineState &state);
@@ -32,6 +33,7 @@ MyPaintEngine::MyPaintEngine(QObject *parent, PaintEngineFeatures features)
 
 bool MyPaintEngine::begin(QPaintDevice *pdev)
 {
+    Q_UNUSED(pdev)
     return true;
 }
 
@@ -52,6 +54,9 @@ void MyPaintEngine::drawPath(const QPainterPath &path)
 
 void MyPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr)
 {
+    Q_UNUSED(r)
+    Q_UNUSED(pm)
+    Q_UNUSED(sr)
 }
 
 QPaintEngine::Type MyPaintEngine::type() const
@@ -98,6 +103,7 @@ QPaintEngine *CodePaintDevice::paintEngine() const
 int CodePaintDevice::metric(PaintDeviceMetric m) const
 {
     switch (m) {
+    case PdmWidth:
     default: return 100;
     }
 }
@@ -122,10 +128,12 @@ QString CodePaintDeviceQt::code() const
 
 void CodePaintDeviceQt::onNewElement(const Element &element)
 {
+    Q_UNUSED(element)
 }
 
 void CodePaintDeviceQt::onDrawPath(const QPainterPath &path)
 {
+    Q_UNUSED(path)
 }
 
 CodePaintDeviceHTML5Canvas::CodePaintDeviceHTML5Canvas(const QString &prefix, QObject *parent)
